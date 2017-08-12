@@ -10,31 +10,31 @@ import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class OrderManager implements Observer {
-    private LinkedBlockingQueue<Order> orderQueue = new LinkedBlockingQueue<>();
+    private LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
 
     public OrderManager() {
         Thread threadDaemon = new Thread() {
+            Set<Cook> cooks = StatisticManager.getInstance().getCooks();
+
             @Override
             public void run() {
-                Set<Cook> cooks = StatisticManager.getInstance().getCooks();
                 while (true) {
                     try {
-                        if (!orderQueue.isEmpty()) {
-                            for (final Cook cook : cooks) {
-                                if (!cook.isBusy()) {
-                                    final Order order = orderQueue.take();
-                                    new Thread() {
-                                        @Override
-                                        public void run() {
-                                            cook.startCookingOrder(order);
-                                        }
-                                    }.start();
-                                }
+                        for (final Cook cook : cooks) {
+                            if (!cook.isBusy() && !queue.isEmpty()) {
+                                final Order order = queue.poll();
+                                Thread th = new Thread() {
+                                    @Override
+                                    public void run() {
+                                        cook.startCookingOrder(order);
+                                    }
+                                };
+                                th.start();
                             }
                         }
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
-
+                        //break;
                     }
                 }
             }
@@ -47,6 +47,6 @@ public class OrderManager implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        orderQueue.add((Order) arg);
+        queue.offer((Order) arg);
     }
 }

@@ -10,16 +10,14 @@ import java.util.List;
 public class Restaurant {
     private static final int ORDER_CREATING_INTERVAL = 100;
 
-
     public static void main(String[] args) {
 
         List<Tablet> tablets = new ArrayList<>();
 
         Cook cook = new Cook("Amigo");
-        Cook cook2 = new Cook("Cook2");
+        Cook cook2 = new Cook("Cook");
         StatisticManager.getInstance().register(cook);
         StatisticManager.getInstance().register(cook2);
-
 
         OrderManager orderManager = new OrderManager();
 
@@ -38,12 +36,9 @@ public class Restaurant {
         thread.start();
         try {
             Thread.sleep(1000);
-
-        } catch (InterruptedException e) {
-
+        } catch (InterruptedException ignore) {
         }
         thread.interrupt();
-
 
         DirectorTablet directorTablet = new DirectorTablet();
         directorTablet.printAdvertisementProfit();

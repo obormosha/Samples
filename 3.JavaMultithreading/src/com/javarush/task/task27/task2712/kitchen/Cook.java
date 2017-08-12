@@ -12,8 +12,6 @@ public class Cook extends Observable {
 
     public Cook(String name) {
         this.name = name;
-
-        //StatisticManager.getInstance().register(this);
     }
 
     public boolean isBusy() {
@@ -29,18 +27,16 @@ public class Cook extends Observable {
         busy = true;
         ConsoleHelper.writeMessage("Start cooking - " + order.toString());
 
-        StatisticManager.getInstance().register(new CookedOrderEventDataRow(order.getTablet().toString(), this.toString(), order.getTotalCookingTime() * 60, order.getDishes()));
         try {
-            Thread.sleep(order.getTotalCookingTime()*10);
+            Thread.sleep(10 * order.getTotalCookingTime());
         } catch (InterruptedException e) {
 
         }
-
+        StatisticManager.getInstance().register(new CookedOrderEventDataRow(order.getTablet().toString(),
+                this.toString(), order.getTotalCookingTime() * 60, order.getDishes()));
         setChanged();
         notifyObservers(order);
 
         busy = false;
     }
-
-
 }

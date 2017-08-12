@@ -50,9 +50,9 @@ public class Tablet extends Observable {
     private void processOrder(Order order) {
         if (!order.isEmpty()) {
             ConsoleHelper.writeMessage(order.toString());
-            new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
             setChanged();
             this.notifyObservers(order);
+            new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
         }
     }
 

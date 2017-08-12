@@ -15,7 +15,7 @@ public class TestOrder extends Order {
     @Override
     protected void initDishes() throws IOException {
 
-        int randomValuesDishesInTestOrder = (int) Math.round(Math.random() * 10);
+        int randomValuesDishesInTestOrder = (int) Math.round(Math.random() * 9 + 1);
         int valueVariantsOfDishes = Dish.values().length;
         ArrayList<Dish> arrayDishes = new ArrayList<>(Arrays.asList(Dish.values()));
 

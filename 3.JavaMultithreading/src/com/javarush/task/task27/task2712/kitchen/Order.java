@@ -14,7 +14,6 @@ public class Order {
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
         initDishes();
-
     }
 
     public Tablet getTablet() {
