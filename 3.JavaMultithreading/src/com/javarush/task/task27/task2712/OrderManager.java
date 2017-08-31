@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class OrderManager implements Observer {
-    private LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
+    private static final LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
 
     public OrderManager() {
         Thread threadDaemon = new Thread() {
@@ -23,13 +23,7 @@ public class OrderManager implements Observer {
                         for (final Cook cook : cooks) {
                             if (!cook.isBusy() && !queue.isEmpty()) {
                                 final Order order = queue.poll();
-                                Thread th = new Thread() {
-                                    @Override
-                                    public void run() {
-                                        cook.startCookingOrder(order);
-                                    }
-                                };
-                                th.start();
+                                cook.startCookingOrder(order);
                             }
                         }
                         Thread.sleep(10);
