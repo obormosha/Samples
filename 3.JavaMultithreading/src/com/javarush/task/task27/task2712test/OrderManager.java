@@ -1,16 +1,9 @@
-package com.javarush.task.task27.task2712;
+package com.javarush.task.task27.task2712test;
 
-import com.javarush.task.task27.task2712.kitchen.Cook;
-import com.javarush.task.task27.task2712.kitchen.Order;
-import com.javarush.task.task27.task2712.statistic.StatisticManager;
+public class OrderManager {
 
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
-
-public class OrderManager implements Observer {
-    private static final LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
+    /*
+    //private static final LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
 
     public OrderManager() {
         Thread threadDaemon = new Thread() {
@@ -42,5 +35,5 @@ public class OrderManager implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         queue.offer((Order) arg);
-    }
+    }*/
 }
